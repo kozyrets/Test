@@ -37,7 +37,7 @@ public class SelenoidChrome extends DriverManager {
         browser.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
 
         remoteDriver = new RemoteWebDriver(
-                URI.create("http://192.168.99.100:4444/wd/hub").toURL(),
+                URI.create("http://192.168.31.155:4444/wd/hub").toURL(), // use correct IP address
                 browser
         );
     }
