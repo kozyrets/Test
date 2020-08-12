@@ -1,0 +1,11 @@
+# IntelliJ project files
+.idea
+*.iml
+.allure
+.target
+.log
+out
+gen
+
+# Project exclude paths
+/target/
