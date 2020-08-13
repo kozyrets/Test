@@ -1,10 +1,10 @@
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import drivers.factory.DriverManager;
 import drivers.factory.DriverManagerFactory;
 import drivers.factory.DriverType;
 import listeners.AllureSelenide;
+import listeners.Log;
 import listeners.LogType;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -12,21 +12,24 @@ import org.testng.annotations.Test;
 
 import java.net.MalformedURLException;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
 import static com.codeborne.selenide.Selenide.open;
 
 public class Run {
 
-    private DriverManager driverManager = DriverManagerFactory.getManager(DriverType.SELENOID_CHROME);
+    // Choose driver
+    private DriverManager driverManager = DriverManagerFactory.getManager(DriverType.CHROME);
 
     public Run() throws MalformedURLException {
     }
 
     @BeforeTest(alwaysRun = true)
-    public void setUp() throws MalformedURLException {
+    public void setUp() throws MalformedURLException { // MalformedURLException using for RemoteDriver
 
+        // For selenide logging to console and logFile.log
+        SelenideLogger.addListener("LogToConsole", new Log());
+
+        // For selenide logging in Allure report
         SelenideLogger.addListener(
                 "AllureSelenide",
                 new AllureSelenide()
@@ -34,13 +37,14 @@ public class Run {
                 .screenshots(true)
                 .includeSelenideSteps(true)
         );
-        WebDriverRunner.setWebDriver(driverManager.getRemoteDriver());
+
+        WebDriverRunner.setWebDriver(driverManager.getDriver());  // for RemoteDriver use - driverManager.getRemoteDriver
     }
 
     @AfterTest(alwaysRun = true)
     public void tearDown() {
-        driverManager.quitRemoteDriver();
-    }
+        driverManager.quitDriver();
+    }   // for RemoteDriver use - driverManager.quitRemoteDriver
 
     @Test
     public void openURL() {
