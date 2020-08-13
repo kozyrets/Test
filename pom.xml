@@ -95,7 +95,7 @@
                     </suiteXmlFiles>
                     <systemPropertyVariables>
                         <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
-                        <allure.link.issue.pattern>csbtt2://id={}</allure.link.issue.pattern>
+                        <allure.link.issue.pattern>https://example.org/issue/{}</allure.link.issue.pattern>
                     </systemPropertyVariables>
                     <parallel>methods</parallel>
                     <threadCount>1</threadCount>

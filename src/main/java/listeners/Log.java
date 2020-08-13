@@ -22,10 +22,16 @@ public class Log implements LogEventListener {
                     String subject = logEvent.getSubject();
                     int beginIndex = subject.indexOf("(") + 1;
                     int lastIndex = subject.lastIndexOf(")");
-                    LOG.info("  Текущий результат совпал с эталонным - " + subject.substring(beginIndex, lastIndex));
+                    LOG.info("Current result is as expected - " + subject.substring(beginIndex, lastIndex));
                     break;
                 case FAIL:
-                    LOG.warn(logEvent.getError().toString());
+                    String event = logEvent.getError().getMessage();
+                    String error = "Unable to locate an element";
+                    if (event.contains(error)) {
+                        LOG.error(error);
+                    } else {
+                        LOG.warn(event.substring(0, event.indexOf("Screenshot:")));
+                    }
                     break;
             }
         }
