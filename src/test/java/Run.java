@@ -10,14 +10,16 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import utils.ParametersExcel;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 
 import static com.codeborne.selenide.AssertionMode.SOFT;
 import static com.codeborne.selenide.Selenide.*;
 
 @Listeners({SoftAsserts.class}) // Don't stop on assertion fail Selenide
-public class Run implements InitLogSelenide {
+public class Run extends ParametersExcel implements InitLogSelenide {
 
     // Choose browser
     private DriverManager driverManager = DriverManagerFactory.getManager(DriverType.CHROME);
@@ -36,14 +38,18 @@ public class Run implements InitLogSelenide {
     }        // for RemoteDriver - driverManager.quitRemoteDriver
 
     @Test
-    public void openURL() {
+    public void openURL() throws IOException {
+
+        GetExcelFile("d:\\TMP\\Книга1.xlsx");
+        GetExcelSheet("Лист1");
+
         // Don't stop on assertion fail Selenide
         Configuration.assertionMode = SOFT;
 
         Log log = new Log();
 
         log.setLog("Open Main Page");
-        open("https://rewardjet.com/main");
+        open(GetParamValue("URL"));
         log.setLog("Check title");
         $x("//*[@class='logo _head']").should(Condition.exactText("RewardJe"));
         log.setLog("logIn");
@@ -52,4 +58,6 @@ public class Run implements InitLogSelenide {
         $("utton-brand").click();
 
     }
+
+
 }
