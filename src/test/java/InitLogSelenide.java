@@ -20,7 +20,7 @@ public interface InitLogSelenide {
                         .enableLogs(LogType.BROWSER, Level.ALL)
                         .screenshots(true)
                         .savePageSource(false)
-                        .includeSelenideSteps(true)
+                        .includeSelenideSteps(false)
         );
     }
 }

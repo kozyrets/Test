@@ -5,6 +5,7 @@ import com.codeborne.selenide.testng.SoftAsserts;
 import drivers.factory.DriverManager;
 import drivers.factory.DriverManagerFactory;
 import drivers.factory.DriverType;
+import listeners.Log;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
@@ -13,13 +14,12 @@ import org.testng.annotations.Test;
 import java.net.MalformedURLException;
 
 import static com.codeborne.selenide.AssertionMode.SOFT;
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
-@Listeners({SoftAsserts.class}) // Doesn't stop on assertion fail Selenide
+@Listeners({SoftAsserts.class}) // Don't stop on assertion fail Selenide
 public class Run implements InitLogSelenide {
 
-    // Choose driver
+    // Choose browser
     private DriverManager driverManager = DriverManagerFactory.getManager(DriverType.CHROME);
 
     public Run() throws MalformedURLException {
@@ -37,11 +37,19 @@ public class Run implements InitLogSelenide {
 
     @Test
     public void openURL() {
-        // Doesn't stop on assertion fail Selenide
+        // Don't stop on assertion fail Selenide
         Configuration.assertionMode = SOFT;
 
+        Log log = new Log();
+
+        log.setLog("Open Main Page");
         open("https://rewardjet.com/main");
+        log.setLog("Check title");
         $x("//*[@class='logo _head']").should(Condition.exactText("RewardJe"));
+        log.setLog("logIn");
+        $(".items__item").click();
+        log.setLog("Get Started");
+        $("utton-brand").click();
 
     }
 }
