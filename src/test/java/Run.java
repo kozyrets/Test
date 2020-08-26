@@ -40,8 +40,8 @@ public class Run extends ParametersExcel implements InitLogSelenide {
     @Test
     public void openURL() throws IOException {
 
-        GetExcelFile("d:\\TMP\\Книга1.xlsx");
-        GetExcelSheet("Лист1");
+        GetExcelFile("d:\\TMP\\Example.xlsx");
+        GetExcelSheet("Task");
 
         // Don't stop on assertion fail Selenide
         Configuration.assertionMode = SOFT;
@@ -51,11 +51,11 @@ public class Run extends ParametersExcel implements InitLogSelenide {
         log.setLog("Open Main Page");
         open(GetParamValue("URL"));
         log.setLog("Check title");
-        $x("//*[@class='logo _head']").should(Condition.exactText("RewardJe"));
+        $x("//*[@class='logo _head']").should(Condition.exactText(GetParamValue("TITLE")));
         log.setLog("logIn");
         $(".items__item").click();
         log.setLog("Get Started");
-        $("utton-brand").click();
+        $("button-brand").click();
 
     }
 

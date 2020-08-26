@@ -11,7 +11,7 @@ public class RunFF {
 
     @BeforeTest(alwaysRun = true)
     public void setUp() {
-        Configuration.browser = "chrome";
+        Configuration.browser = "firefox";
         WebDriverManager.firefoxdriver().setup();
         driver = new FirefoxDriver();
     }
@@ -25,6 +25,6 @@ public class RunFF {
 
     @Test(testName = "FF")
     public void runFF() {
-        driver.get("https://rewardjet.com/main");
+        driver.get("https://www.google.com/");
     }
 }
